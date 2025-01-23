@@ -11,20 +11,21 @@ namespace CustomLibraryOfActionZennoPoster.Extensions
     public static class TabExtension
     {
         /// <summary>
-        /// Установить значение
+        /// Установка значения
         /// </summary>
         /// <param name="tab"></param>
-        /// <param name="value"></param>
-        /// <param name="attribute"></param>
-        /// <param name="xPath"></param>
-        /// <param name="millisecondsDelayMin"></param>
-        /// <param name="millisecondsDelayMax"></param>
-        /// <param name="secondWaitingElement"></param>
-        /// <param name="emulationLevel"></param>
-        /// <returns></returns>
+        /// <param name="value">Что</param>
+        /// <param name="attribute">Куда</param>
+        /// <param name="xPath">Запрос</param>
+        /// <param name="xPathToPosition">Позиция в дереве элементов</param>
+        /// <param name="millisecondsDelayMin">Подождать перед выполнением, минимально в миллисекундах</param>
+        /// <param name="millisecondsDelayMax">Подождать перед выполнением, максимально в миллисекундах</param>
+        /// <param name="secondWaitingElement">Ждать элемент не более</param>
+        /// <returns>Ответ, содержащий истину в случае успеха.</returns>
         /// <example>
         /// <code>
-        /// 
+        /// var result = instance.ActiveTab.SetValue("0", "value", "//*[@id='text']");
+        /// project.SendInfoToLog(result.ToString());
         /// </code>
         /// </example>
         public static bool SetValue(
@@ -51,20 +52,23 @@ namespace CustomLibraryOfActionZennoPoster.Extensions
         }
 
         /// <summary>
-        /// Установить значение
+        /// Установка значения
         /// </summary>
         /// <param name="tab"></param>
-        /// <param name="value"></param>
-        /// <param name="attribute"></param>
-        /// <param name="xPath"></param>
-        /// <param name="millisecondsDelayMin"></param>
-        /// <param name="millisecondsDelayMax"></param>
-        /// <param name="secondWaitingElement"></param>
-        /// <param name="emulationLevel"></param>
-        /// <returns></returns>
+        /// <param name="value">Что</param>
+        /// <param name="attribute">Куда</param>
+        /// <param name="xPath">Запрос</param>
+        /// <param name="xPathToPosition">Позиция в дереве элементов</param>
+        /// <param name="millisecondsDelayMin">Подождать перед выполнением, минимально в миллисекундах</param>
+        /// <param name="millisecondsDelayMax">Подождать перед выполнением, максимально в миллисекундах</param>
+        /// <param name="secondWaitingElement">Ждать элемент не более</param>
+        /// <returns>Ответ, содержащий истину в случае успеха.</returns>
         /// <example>
         /// <code>
-        /// 
+        /// Task<bool> result = Task.Run(async () => {
+	    ///     return await instance.ActiveTab.SetValueAsync("0", "value", "//*[@id='text']").ConfigureAwait(false);
+        /// });
+        /// project.SendInfoToLog(result.Result.ToString());
         /// </code>
         /// </example>
         public static async Task<bool> SetValueAsync(
@@ -88,6 +92,86 @@ namespace CustomLibraryOfActionZennoPoster.Extensions
             }
 
             return await Task.FromResult(false);
+        }
+
+        /// <summary>
+        /// Получение значения
+        /// </summary>
+        /// <param name="tab"></param>
+        /// <param name="attribute">Что брать</param>
+        /// <param name="xPath">Запрос</param>
+        /// <param name="xPathToPosition">Позиция в дереве элементов</param>
+        /// <param name="millisecondsDelayMin">Подождать перед выполнением, минимально в миллисекундах</param>
+        /// <param name="millisecondsDelayMax">Подождать перед выполнением, максимально в миллисекундах</param>
+        /// <param name="secondWaitingElement">Ждать элемент не более</param>
+        /// <returns>Ответ, содержащий значение атрибута.</returns>
+        /// <example>
+        /// <code>
+        /// var result = instance.ActiveTab.GetValue("value", "//*[@id='text']");
+        /// project.SendInfoToLog(result.ToString());
+        /// </code>
+        /// </example>
+        public static string GetValue(
+            this Tab tab,
+            string attribute,
+            string xPath,
+            int xPathToPosition = 0,
+            int millisecondsDelayMin = 0,
+            int millisecondsDelayMax = 0,
+            int secondWaitingElement = 0)
+        {
+            WaitingBeforeExecution(millisecondsDelayMin, millisecondsDelayMax);
+            var waitElResult = tab.WaitElementToAppear(xPath, xPathToPosition, secondWaitingElement);
+
+            if (waitElResult.Item1)
+            {
+                HtmlElement he = waitElResult.Item2;
+                var result = he.GetAttribute(attribute);
+                return result;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Получение значения
+        /// </summary>
+        /// <param name="tab"></param>
+        /// <param name="attribute">Что брать</param>
+        /// <param name="xPath">Запрос</param>
+        /// <param name="xPathToPosition">Позиция в дереве элементов</param>
+        /// <param name="millisecondsDelayMin">Подождать перед выполнением, минимально в миллисекундах</param>
+        /// <param name="millisecondsDelayMax">Подождать перед выполнением, максимально в миллисекундах</param>
+        /// <param name="secondWaitingElement">Ждать элемент не более</param>
+        /// <returns>Ответ, содержащий значение атрибута.</returns>
+        /// <example>
+        /// <code>
+        /// Task<string> result = Task.Run(async () => {
+	    /// return await instance.ActiveTab.GetValueAsync("value", "//*[@id='text']").ConfigureAwait(false);
+        /// });
+        /// project.SendInfoToLog(result.Result.ToString());
+        /// </code>
+        /// </example>
+        public static async Task<string> GetValueAsync(
+            this Tab tab,
+            string attribute,
+            string xPath,
+            int xPathToPosition = 0,
+            int millisecondsDelayMin = 0,
+            int millisecondsDelayMax = 0,
+            int secondWaitingElement = 0)
+        {
+            await WaitingBeforeExecutionAsync(millisecondsDelayMin, millisecondsDelayMax);
+            var waitElResult = await tab.WaitElementToAppearAsync(xPath, xPathToPosition, secondWaitingElement);
+
+            if (waitElResult.Item1)
+            {
+                HtmlElement he = waitElResult.Item2;
+                var result = he.GetAttribute(attribute);
+                return result;
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -118,11 +202,6 @@ namespace CustomLibraryOfActionZennoPoster.Extensions
             int secondWaitingElement = 0,
             string emulationLevel = "SuperEmulation")
         {
-            if (0 > secondWaitingElement)
-            {
-                secondWaitingElement = 0;
-            }
-
             WaitingBeforeExecution(millisecondsDelayMin, millisecondsDelayMax);
             var waitElResult = tab.WaitElementToAppear(xPath, xPathToPosition, secondWaitingElement);
 
