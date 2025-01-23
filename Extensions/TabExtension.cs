@@ -21,7 +21,12 @@ namespace CustomLibraryOfActionZennoPoster.Extensions
         /// <param name="millisecondsDelayMax">Подождать перед выполнением, максимально в миллисекундах</param>
         /// <param name="secondWaitingElement">Ждать элемент не более</param>
         /// <param name="emulationLevel">Уровень эмуляции</param>
-        /// <returns></returns>
+        /// <returns>Ответ, содержащий истину в случае успеха.</returns>
+        /// <example>
+        /// <code>
+        /// var result = instance.ActiveTab.ExecuteEvent("click", "//button");
+        /// </code>
+        /// </example>
         public static bool ExecuteEvent(
             this Tab tab,
             string @event,
@@ -50,11 +55,13 @@ namespace CustomLibraryOfActionZennoPoster.Extensions
             //Подождать перед выполнением
             Thread.Sleep(new Random().Next(millisecondsDelayMin, millisecondsDelayMax));
 
-            HtmlElement he = tab.FindElementByXPath(xPath, xPathToPosition);
+            HtmlElement he = null;
 
             //Ждать жлемент не более
             for (int i = 0; i < secondWaitingElement; i++)
             {
+                he = tab.FindElementByXPath(xPath, xPathToPosition);
+
                 if (he.IsVoid) Thread.Sleep(1000);
                 else break;
             }
@@ -76,7 +83,15 @@ namespace CustomLibraryOfActionZennoPoster.Extensions
         /// <param name="millisecondsDelayMax">Подождать перед выполнением, максимально в миллисекундах</param>
         /// <param name="secondWaitingElement">Ждать элемент не более</param>
         /// <param name="emulationLevel">Уровень эмуляции</param>
-        /// <returns></returns>
+        /// <returns>Ответ, содержащий истину в случае успеха.</returns>
+        /// <example>
+        /// <code>
+        /// Task<bool> result = Task.Run(async () => {
+	    ///     return await instance.ActiveTab.ExecuteEventAsync("click", "//div[starts-with(@class,'sign-in-page')]").ConfigureAwait(false);
+        /// });
+        /// project.SendInfoToLog(result.Result.ToString());
+        /// </code>
+        /// </example>
         public static async Task<bool> ExecuteEventAsync(
             this Tab tab,
             string @event,
@@ -105,11 +120,13 @@ namespace CustomLibraryOfActionZennoPoster.Extensions
             //Подождать перед выполнением
             await Task.Delay(new Random().Next(millisecondsDelayMin, millisecondsDelayMax));
 
-            HtmlElement he = tab.FindElementByXPath(xPath, xPathToPosition);
+            HtmlElement he = null;
 
             //Ждать жлемент не более
             for (int i = 0; i < secondWaitingElement; i++)
             {
+                he = tab.FindElementByXPath(xPath, xPathToPosition);
+
                 if (he.IsVoid) await Task.Delay(1000);
                 else break;
             }
