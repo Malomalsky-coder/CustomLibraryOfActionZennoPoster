@@ -266,7 +266,7 @@ namespace CustomLibraryOfActionZennoPoster.Extensions
         /// <param name="xPathToPosition"></param>
         /// <param name="secondWaitingElement"></param>
         /// <returns></returns>
-        private static (bool, HtmlElement) WaitElementToAppear(this Tab tab, string xPath, int xPathToPosition, int secondWaitingElement)
+        public static (bool, HtmlElement) WaitElementToAppear(this Tab tab, string xPath, int xPathToPosition, int secondWaitingElement)
         {
             if (0 > secondWaitingElement)
             {
@@ -296,7 +296,7 @@ namespace CustomLibraryOfActionZennoPoster.Extensions
         /// <param name="xPathToPosition"></param>
         /// <param name="secondWaitingElement"></param>
         /// <returns></returns>
-        private static async Task<(bool, HtmlElement)> WaitElementToAppearAsync(this Tab tab, string xPath, int xPathToPosition, int secondWaitingElement)
+        public static async Task<(bool, HtmlElement)> WaitElementToAppearAsync(this Tab tab, string xPath, int xPathToPosition, int secondWaitingElement)
         {
             if (0 > secondWaitingElement)
             {
