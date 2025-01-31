@@ -39,7 +39,7 @@ namespace CustomLibraryOfActionZennoPoster.Extensions
             int secondWaitingElement = 0)
         {
             WaitingBeforeExecution(millisecondsDelayMin, millisecondsDelayMax);
-            var waitElResult = tab.WaitElementToAppear(xPath, xPathToPosition, secondWaitingElement);
+            var waitElResult = tab.WaitElementByXPath(xPath, xPathToPosition, secondWaitingElement);
 
             if (waitElResult.Item1)
             {
@@ -82,7 +82,7 @@ namespace CustomLibraryOfActionZennoPoster.Extensions
             int secondWaitingElement = 0)
         {
             WaitingBeforeExecution(millisecondsDelayMin, millisecondsDelayMax);
-            var waitElResult = await tab.WaitElementToAppearAsync(xPath, xPathToPosition, secondWaitingElement);
+            var waitElResult = await tab.WaitElementByXPathAsync(xPath, xPathToPosition, secondWaitingElement);
 
             if (waitElResult.Item1)
             {
@@ -121,7 +121,7 @@ namespace CustomLibraryOfActionZennoPoster.Extensions
             int secondWaitingElement = 0)
         {
             WaitingBeforeExecution(millisecondsDelayMin, millisecondsDelayMax);
-            var waitElResult = tab.WaitElementToAppear(xPath, xPathToPosition, secondWaitingElement);
+            var waitElResult = tab.WaitElementByXPath(xPath, xPathToPosition, secondWaitingElement);
 
             if (waitElResult.Item1)
             {
@@ -162,7 +162,7 @@ namespace CustomLibraryOfActionZennoPoster.Extensions
             int secondWaitingElement = 0)
         {
             await WaitingBeforeExecutionAsync(millisecondsDelayMin, millisecondsDelayMax);
-            var waitElResult = await tab.WaitElementToAppearAsync(xPath, xPathToPosition, secondWaitingElement);
+            var waitElResult = await tab.WaitElementByXPathAsync(xPath, xPathToPosition, secondWaitingElement);
 
             if (waitElResult.Item1)
             {
@@ -203,7 +203,7 @@ namespace CustomLibraryOfActionZennoPoster.Extensions
             string emulationLevel = "SuperEmulation")
         {
             WaitingBeforeExecution(millisecondsDelayMin, millisecondsDelayMax);
-            var waitElResult = tab.WaitElementToAppear(xPath, xPathToPosition, secondWaitingElement);
+            var waitElResult = tab.WaitElementByXPath(xPath, xPathToPosition, secondWaitingElement);
 
             if (waitElResult.Item1)
             {
@@ -246,7 +246,7 @@ namespace CustomLibraryOfActionZennoPoster.Extensions
             string emulationLevel = "SuperEmulation")
         {
             await WaitingBeforeExecutionAsync(millisecondsDelayMin, millisecondsDelayMax);
-            var waitElResult = await tab.WaitElementToAppearAsync(xPath, xPathToPosition, secondWaitingElement);
+            var waitElResult = await tab.WaitElementByXPathAsync(xPath, xPathToPosition, secondWaitingElement);
 
             if (waitElResult.Item1)
             {
@@ -266,7 +266,7 @@ namespace CustomLibraryOfActionZennoPoster.Extensions
         /// <param name="xPathToPosition"></param>
         /// <param name="secondWaitingElement"></param>
         /// <returns></returns>
-        public static (bool, HtmlElement) WaitElementToAppear(this Tab tab, string xPath, int xPathToPosition = 0, int secondWaitingElement = 0)
+        public static (bool, HtmlElement) WaitElementByXPath(this Tab tab, string xPath, int xPathToPosition = 0, int secondWaitingElement = 0)
         {
             if (0 > secondWaitingElement)
             {
@@ -296,7 +296,7 @@ namespace CustomLibraryOfActionZennoPoster.Extensions
         /// <param name="xPathToPosition"></param>
         /// <param name="secondWaitingElement"></param>
         /// <returns></returns>
-        public static async Task<(bool, HtmlElement)> WaitElementToAppearAsync(this Tab tab, string xPath, int xPathToPosition = 0, int secondWaitingElement = 0)
+        public static async Task<(bool, HtmlElement)> WaitElementByXPathAsync(this Tab tab, string xPath, int xPathToPosition = 0, int secondWaitingElement = 0)
         {
             if (0 > secondWaitingElement)
             {
