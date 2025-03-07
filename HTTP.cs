@@ -142,7 +142,7 @@ namespace CustomLibraryOfActionZennoPoster
         /// <param name="useOriginalUrl">Использовать ли оригинальный URL (по умолчанию false).</param>
         /// <param name="throwExceptionOnError">Выбрасывать ли исключение при ошибке (по умолчанию true).</param>
         /// <returns>Ответ сервера в виде строки.</returns>
-        private string Request(
+        public string Request(
             HttpMethod method,
             string url,
             string content = "",
